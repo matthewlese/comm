@@ -7,7 +7,7 @@ const passport = require('passport');
 const path = require('path');
 
 const users = require('./routes/api/users')
-const recipes = require('./routes/api/recipes')
+const relationships = require('./routes/api/relationships')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get("/", (req, res) => res.send("Hello World 2"));
 app.use("/api/users", users);
-app.use('/api/recipes', recipes)
+app.use('/api/relationships', relationships)
 
 app.use(passport.initialize());
 require('./config/passport')(passport);

@@ -8,7 +8,7 @@ const mSTP = state => {
   return ({
     author,
     currentUserId,
-    formType: 'Create Recipe',
+    formType: 'Create Relationship',
     errors: state.errors.recipe
   })
 }

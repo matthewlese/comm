@@ -16,7 +16,7 @@ const Header = props => {
   } else {
     rightNav = <div className='flex items-center space-x-3'>
       <div className='cursor-pointer font-medium text-gray-800 hover:text-black hover:italic' 
-        onClick={e => history.push('/recipes/create')}>Create a Recipe</div>
+        onClick={e => history.push('/recipes/create')}>Create a Relationship</div>
       <div className='cursor-pointer font-medium text-gray-800 hover:text-black hover:italic' 
         onClick={e => signout()}>Sign Out</div>
     </div>
