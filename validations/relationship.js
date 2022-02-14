@@ -4,6 +4,8 @@ const validText = require('./valid-text');
 module.exports = function validateRelationshipInput(data) {
   let errors = {};
 
+  console.log(data)
+
   if (data.members.length === 0) {
     errors.members = "Something went wrong and the relationship is empty.";
   }

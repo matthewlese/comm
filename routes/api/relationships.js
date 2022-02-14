@@ -16,21 +16,11 @@ router.post('/create', passport.authenticate('jwt', { session: false }),
     if (!isValid) {
       return res.status(400).json(errors);
     }
-    let { title, authorId } = req.body
-    Relationship.findOne({
-      authorId: authorId, // filter by the author (current user)
-      title: title        // filter by title
-    }).then(relationship => {
-      if (relationship) {
-        errors.title = 'You already have a relationship with this title.'
-        return res.status(400).json(errors) // bad request
-      } else {
-        const newRelationship = new Relationship(req.body)
-        newRelationship.save()
-          .then(relationship => res.json(relationship))
-          .catch(err => res.status(400).json(err));
-      }
-    })
+    let { members } = req.body
+    const newRelationship = new Relationship(req.body)
+    newRelationship.save()
+      .then(relationship => res.json(relationship))
+      .catch(err => res.status(400).json(err));
 })
 
 router.get('/', (req, res) => {
