@@ -16,7 +16,7 @@ const isRelatedTo = require('../../util/is_related_to')
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
   res.json({
     id: req.user.id,
-    username: req.body.username
+    username: req.user.username
   });
 })
 
@@ -79,8 +79,7 @@ router.post('/signin', (req, res) => {
               (err, token) => {
                 res.json({
                   success: true,
-                  token: 'Bearer ' + token,
-                  userId: user.id
+                  token: 'Bearer ' + token
                 });
               });
           } else {
@@ -123,14 +122,17 @@ router.get('/:userId',
   (req, res) => {
     const userId = req.params.userId
     const currentUser = req.user
-    User.findOne({ id: userId })
-      .then(user => {
-        if (!user) {
-          return res.status(400).json({userId: 'This user does not exist'})
-        }
-        console.log(isRelatedTo(userId, currentUser))
-        res.json('done')
-      })
+    if (isRelatedTo(userId, currentUser)) {
+      User.findOne({ id: userId })
+        .then(user => {
+          if (!user) {
+            return res.status(400).json({userId: 'This user does not exist'})
+          }
+          res.json(user)
+        })
+    } else {
+      return res.status(401).json({userId: 'You do not have access to this user'})
+    }
 })
 
 module.exports = router;
