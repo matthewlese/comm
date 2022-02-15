@@ -17,11 +17,12 @@ router.post('/create', passport.authenticate('jwt', { session: false }),
       .catch(err => res.status(400).json(err));
 })
 
-router.get('/', (req, res) => {
-  Relationship.find()
-    .then(relationships => res.json(relationships))
-    .catch(err => res.status(404).json({ noRelationshipsFound: 'No relationships found.'}))
-})
+// router.get('/', (req, res) => {
+//   console.log(req.body.userId)
+//   Relationship.find({ members: { $in: [req.body.userId] } })
+//     .then(relationships => res.json(relationships))
+//     .catch(err => res.status(404).json({ noRelationshipsFound: 'No relationships found.'}))
+// })
 
 router.get('/:relationshipId', (req, res) => {
   const { relationshipId } = req.params

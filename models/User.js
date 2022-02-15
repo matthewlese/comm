@@ -9,6 +9,10 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  relationships: {
+    type: [Schema.Types.ObjectId],
+    required: true
   }
 }, {
   timestamps: true

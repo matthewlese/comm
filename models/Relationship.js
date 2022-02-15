@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const RelationshipSchema = new Schema({
   members: {
-    type: Array,
+    type: [Schema.Types.ObjectId],
     required: true
   }
 }, {

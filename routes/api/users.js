@@ -8,6 +8,7 @@ const passport = require('passport');
 const User = require('../../models/User');
 const validateSignupInput = require('../../validations/signup');
 const validateSigninInput = require('../../validations/signin');
+const isRelatedTo = require('../../util/is_related_to')
 
 // router.get("/test", (req, res) => res.json({ msg: "This is the users route" }));
 
@@ -33,7 +34,8 @@ router.post("/signup", (req, res) => {
     } else {
       const newUser = new User({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        relationships: []
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -88,30 +90,47 @@ router.post('/signin', (req, res) => {
     })
 })
 
-router.delete('/delete', (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+router.delete('/delete', 
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
 
-  User.findOne({ username })
-    .then(user => {
-      if (!user) {
-        return res.status(404).json({ username: 'This user does not exist' })
-      }
-      bcrypt.compare(password, user.password)
-        .then(isMatch => {
-          if (isMatch) {
-            User.deleteOne({ username }, err => {
-              if (err) { 
-                return res.status(400).json('Something went wrong.')
-              } else {
-                return res.json(`${username} deleted.`)
-              }
-            })
-          } else {
-            return res.status(400).json({ password: 'Incorrect password' });
-          }
-        })
-    })
+    User.findOne({ username })
+      .then(user => {
+        if (!user) {
+          return res.status(404).json({ username: 'This user does not exist' })
+        }
+        bcrypt.compare(password, user.password)
+          .then(isMatch => {
+            if (isMatch) {
+              User.deleteOne({ username }, err => {
+                if (err) { 
+                  return res.status(400).json('Something went wrong.')
+                } else {
+                  return res.json(`${username} deleted.`)
+                }
+              })
+            } else {
+              return res.status(400).json({ password: 'Incorrect password' });
+            }
+          })
+      })
+})
+
+router.get('/:userId', 
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const userId = req.params.userId
+    const currentUser = req.user
+    User.findOne({ id: userId })
+      .then(user => {
+        if (!user) {
+          return res.status(400).json({userId: 'This user does not exist'})
+        }
+        console.log(isRelatedTo(userId, currentUser))
+        res.json('done')
+      })
 })
 
 module.exports = router;
