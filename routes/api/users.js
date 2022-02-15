@@ -22,11 +22,9 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
 
 router.post("/signup", (req, res) => {
   const { errors, isValid } = validateSignupInput(req.body);
-
   if (!isValid) {
     return res.status(400).json(errors);
   }
-
   User.findOne({ username: req.body.username }).then(user => {
     if (user) {
       errors.username = "Username already exists";
@@ -37,7 +35,6 @@ router.post("/signup", (req, res) => {
         password: req.body.password,
         relationships: []
       });
-
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
@@ -54,20 +51,16 @@ router.post("/signup", (req, res) => {
 
 router.post('/signin', (req, res) => {
   const { errors, isValid } = validateSigninInput(req.body);
-
   if (!isValid) {
     return res.status(400).json(errors);
   }
-
   const username = req.body.username;
   const password = req.body.password;
-
   User.findOne({ username })
     .then(user => {
       if (!user) {
         return res.status(404).json({ username: 'This user does not exist' });
       }
-
       bcrypt.compare(password, user.password)
         .then(isMatch => {
           if (isMatch) {
@@ -135,11 +128,13 @@ router.get('/:userId',
     }
 })
 
-router.get('/:userId/relationships', passport.authenticate('jwt', { session: false }), (req, res) => {
-  const userId = req.params.userId
-  User.findOne({ id: userId })
-    .then(user => res.json(user.relationships))
-    .catch(err => res.status(404).json({ noRelationshipsFound: 'No relationships found.'}))
+router.get('/:userId/relationships',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const userId = req.params.userId
+    User.findOne({ id: userId })
+      .then(user => res.json(user.relationships))
+      .catch(err => res.status(404).json({ noRelationshipsFound: 'No relationships found.'}))
 })
 
 module.exports = router;

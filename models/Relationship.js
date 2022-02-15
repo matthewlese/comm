@@ -5,6 +5,10 @@ const RelationshipSchema = new Schema({
   members: {
     type: [Schema.Types.ObjectId],
     required: true
+  },
+  discussions: {
+    type: [Schema.Types.ObjectId],
+    required: true
   }
 }, {
   timestamps: true

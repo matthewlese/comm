@@ -4,7 +4,8 @@ const passport = require('passport');
 
 const Relationship = require("../../models/Relationship");
 
-router.post('/create', passport.authenticate('jwt', { session: false }), 
+router.post('/create',
+  passport.authenticate('jwt', { session: false }), 
   (req, res) => {
     const relData = {
       members: [req.user._id],
@@ -23,24 +24,28 @@ router.post('/create', passport.authenticate('jwt', { session: false }),
       .catch(err => res.status(400).json(err));
 })
 
-router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Relationship.find({ _id: { $in: [...req.user.relationships] } })
-    .then(relationships => res.json(relationships))
-    .catch(err => res.status(404).json({ noRelationshipsFound: 'No relationships found.'}))
-})
+// router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+//   Relationship.find({ _id: { $in: [...req.user.relationships] } })
+//     .then(relationships => res.json(relationships))
+//     .catch(err => res.status(404).json({ noRelationshipsFound: 'No relationships found.'}))
+// })
 
-router.get('/:relationshipId', passport.authenticate('jwt', { session: false }), (req, res) => {
-  const { relationshipId } = req.params
-  Relationship.findById(relationshipId)
-    .then(relationship => res.json(relationship))
-    .catch(err => res.status(404).json({ noRelationshipFound: 'No relationship found.'}))
-  })
+router.get('/:relationshipId',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { relationshipId } = req.params
+    Relationship.findById(relationshipId)
+      .then(relationship => res.json(relationship))
+      .catch(err => res.status(404).json({ noRelationshipFound: 'No relationship found.'}))
+})
   
-router.delete('/:relationshipId/delete', passport.authenticate('jwt', { session: false }), (req, res) => {
-  const { relationshipId } = req.params
-  Relationship.findByIdAndDelete(relationshipId)
-    .then(relationship => res.json(relationship))
-    .catch(err => res.status(404).json({ noRelationshipFound: 'No relationship found.'}))
+router.delete('/:relationshipId/delete',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { relationshipId } = req.params
+    Relationship.findByIdAndDelete(relationshipId)
+      .then(relationship => res.json(relationship))
+      .catch(err => res.status(404).json({ noRelationshipFound: 'No relationship found.'}))
 })
 
 module.exports = router
