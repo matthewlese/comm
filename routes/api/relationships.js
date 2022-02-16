@@ -3,6 +3,8 @@ const router = express.Router();
 const passport = require('passport');
 
 const Relationship = require("../../models/Relationship");
+const User = require("../../models/User");
+const Invitation = require("../../models/Invitation");
 
 router.post('',
   passport.authenticate('jwt', { session: false }), 
@@ -61,17 +63,24 @@ router.post('/:relationshipId/invitations',
   passport.authenticate('jwt', { session: false }), 
   (req, res) => {
     const { inviteeUsername, relationshipId } = req.body
-    console.log(req.params)
     User.findOne({ username: inviteeUsername })
       .then(user => {
-        const newInvitation = new Invitation({
+        Invitation.findOne({
           relationshipId,
-          invitee: user._id,
-          inviter: req.user._id
+          invitee: user._id
         })
-        newInvitation.save()
-          .then(invitation => res.json(invitation))
-          .catch(err => res.status(400).json(err));
+          .then(invitation => res.status(400).json('That user has already been invited'))
+          .catch(err => {
+            const newInvitation = new Invitation({
+              relationshipId,
+              invitee: user._id,
+              inviter: req.user._id,
+              accepted: false
+            })
+            newInvitation.save()
+              .then(invitation => res.json(invitation))
+              .catch(err => res.status(400).json(err));
+          })
       })
       .catch(err => res.status(400).json({ noUserFound: "No user found with that username"}))
 })

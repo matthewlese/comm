@@ -13,6 +13,10 @@ const InvitationSchema = new Schema({
   inviter: {
     type: Schema.Types.ObjectId,
     required: true
+  },
+  accepted: {
+    type: Boolean,
+    required: true
   }
 }, {
   timestamps: true
