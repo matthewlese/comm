@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import RecipeForm from "./recipe_form";
-import { createRecipe } from "../../actions/recipe_actions";
+import RelationshipForm from "./relationship_form";
+import { createRelationship } from "../../actions/relationship_actions";
 
 const mSTP = state => {
   const author = state.session.user
@@ -9,13 +9,13 @@ const mSTP = state => {
     author,
     currentUserId,
     formType: 'Create Relationship',
-    errors: state.errors.recipe
+    errors: state.errors.relationship
   })
 }
 
 const mDTP = dispatch => ({
-  action: recipe => dispatch(createRecipe(recipe)),
+  action: relationship => dispatch(createRelationship(relationship)),
   // clearErrors: () => dispatch(clearErrors())
 })
 
-export default connect(mSTP, mDTP)(RecipeForm)
+export default connect(mSTP, mDTP)(RelationshipForm)

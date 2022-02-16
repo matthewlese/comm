@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/matthewlese/Mern-PiDough.git"
+    "url": "git+https://github.com/matthewlese/Mern-Comm.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/matthewlese/Mern-PiDough/issues"
+    "url": "https://github.com/matthewlese/Mern-Comm/issues"
   },
-  "homepage": "https://github.com/matthewlese/Mern-PiDough#readme",
+  "homepage": "https://github.com/matthewlese/Mern-Comm#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",

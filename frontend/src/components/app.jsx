@@ -4,9 +4,9 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import '../index.css'
 import HeaderContainer from '../components/header/header_container'
 import Modal from '../components/modal/modal_container'
-import CreateRecipeFormContainer from '../components/recipes/create_recipe_form_container'
-import RecipeShowContainer from './recipes/recipe_show_container';
-import RecipesIndexContainer from '../components/recipes/recipes_index_container'
+import CreateRelationshipFormContainer from '../components/relationships/create_relationship_form_container'
+import RelationshipShowContainer from './relationships/relationship_show_container';
+import RelationshipsIndexContainer from '../components/relationships/relationships_index_container'
 
 const App = () => {
   return(
@@ -15,9 +15,9 @@ const App = () => {
     <div className='flex flex-col justify-between min-h-[95vh]'>
       <div className='relative pb-6 overflow-hidden'>
         <Switch>
-          <Route exact path='/' component={RecipesIndexContainer}/>
-          <ProtectedRoute exact path='/recipes/create' component={CreateRecipeFormContainer}/>
-          <Route path='/recipes/:recipeId' component={RecipeShowContainer}/>
+          <ProtectedRoute exact path='/' component={RelationshipsIndexContainer}/>
+          <ProtectedRoute exact path='/relationships/create' component={CreateRelationshipFormContainer}/>
+          <ProtectedRoute path='/relationships/:relationshipId' component={RelationshipShowContainer}/>
         </Switch>
       </div>
       <footer className='bg-yellow-900 relative bottom-0 h-20 w-screen'>

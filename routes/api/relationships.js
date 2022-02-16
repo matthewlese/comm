@@ -48,4 +48,13 @@ router.delete('/:relationshipId/delete',
       .catch(err => res.status(404).json({ noRelationshipFound: 'No relationship found.'}))
 })
 
-module.exports = router
+router.get('/:relationshipId/discussions',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { relationshipId } = req.params
+    Discussion.find({ relationshipId })
+      .then(discussions => res.json(discussions))
+      .catch(err => res.status(404).json({ noRelationshipFound: 'No relationship found.'}))
+})
+
+module.exports = router;

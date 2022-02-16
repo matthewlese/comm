@@ -1,6 +1,6 @@
 import { RECEIVE_CURRENT_USER, SIGNOUT_CURRENT_USER } from "../actions/session_actions"
 import { RECEIVE_USER } from '../actions/user_actions'
-// import { RECEIVE_RECIPES } from '../actions/recipe_actions'
+// import { RECEIVE_RELATIONSHIPS } from '../actions/relationship_actions'
 // import { RECEIVE_FOLLOW, REMOVE_FOLLOW } from "../actions/follow_actions"
 
 let currentUserId = null
@@ -20,9 +20,9 @@ const usersReducer = (state={}, action) => {
       return Object.assign(nextState, { [action.currentUser.id]: action.currentUser})
     // case RECEIVE_USERS:
     //   return action.users
-    // case RECEIVE_RECIPES:
-    //   Object.values(action.recipes).forEach(recipe => {
-    //     Object.assign(nextState, {[recipe.author.id]: recipe.author})
+    // case RECEIVE_RELATIONSHIPS:
+    //   Object.values(action.relationships).forEach(relationship => {
+    //     Object.assign(nextState, {[relationship.author.id]: relationship.author})
     //   })
     //   return nextState
     // case RECEIVE_FOLLOW:

@@ -37,7 +37,7 @@ class SessionForm extends React.Component {
   }
 
   formGreeting() {
-    return this.props.formType === 'Sign In' ? 'Welcome Back.' : 'Join PiDough.'
+    return this.props.formType === 'Sign In' ? 'Welcome Back.' : 'Join Comm.'
   }
 
   password2() {

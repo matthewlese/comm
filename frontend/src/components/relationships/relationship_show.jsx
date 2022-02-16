@@ -1,7 +1,7 @@
 import React from "react"
 import { withRouter } from "react-router"
 
-class RecipeShow extends React.Component {
+class RelationshipShow extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -9,8 +9,8 @@ class RecipeShow extends React.Component {
       numPizzas: 1,
       pizzaSize: '12"',
       crustThickness: 'thin',
-      unitRecipeData: null,
-      recipeData: null
+      unitRelationshipData: null,
+      relationshipData: null
     }
     this.update = this.update.bind(this)
   }
@@ -20,7 +20,7 @@ class RecipeShow extends React.Component {
     const pizzaDimensions = pizzaSize.match(/\d+\.\d+|\d+/g)
     const pizzaArea = pizzaDimensions.length === 1 ? (Math.pow((parseFloat(pizzaDimensions[0]) / 2), 2) * Math.PI) : parseFloat(pizzaDimensions[0]) * parseFloat(pizzaDimensions[1])
     const doughFactor = parseInt(numPizzas) * pizzaArea * (crustThickness === 'thin' ? 1 : (crustThickness === 'thick-ish' ? 1.6 : 2.2))
-    this.setState({ doughFactor }, res => this.updateRecipeAmounts())
+    this.setState({ doughFactor }, res => this.updateRelationshipAmounts())
   }
 
   update(sizeAttribute) {
@@ -31,17 +31,17 @@ class RecipeShow extends React.Component {
     }
   }
 
-  updateRecipeAmounts(data) {
-    let recipeData
-    if (this.state.unitRecipeData) {
-      recipeData = this.state.unitRecipeData
+  updateRelationshipAmounts(data) {
+    let relationshipData
+    if (this.state.unitRelationshipData) {
+      relationshipData = this.state.unitRelationshipData
     } else if (data) {
-      recipeData = data
+      relationshipData = data
     }
 
-    let fermentData = recipeData['ferment'] || {}
-    let bulkData = recipeData['bulk'] || {}
-    let extraData = recipeData['extra'] || {}
+    let fermentData = relationshipData['ferment'] || {}
+    let bulkData = relationshipData['bulk'] || {}
+    let extraData = relationshipData['extra'] || {}
     let {doughFactor} = this.state
     const scaledFermentData = {}
     const scaledBulkData = {}
@@ -76,7 +76,7 @@ class RecipeShow extends React.Component {
       }
     })
     this.setState({
-      recipeData: {
+      relationshipData: {
         ferment: scaledFermentData,
         bulk: scaledBulkData,
         extra: scaledExtraData
@@ -85,11 +85,11 @@ class RecipeShow extends React.Component {
   }
 
   componentDidMount() {
-    let {recipeId, recipe, getRecipe, history} = this.props
-    getRecipe(recipeId)
+    let {relationshipId, relationship, getRelationship, history} = this.props
+    getRelationship(relationshipId)
       .then(res => {
-        this.updateRecipeAmounts(res.recipe.data)
-        this.setState({ unitRecipeData: res.recipe.data })
+        this.updateRelationshipAmounts(res.relationship.data)
+        this.setState({ unitRelationshipData: res.relationship.data })
       },
         err => history.push('/feed'))
   }
@@ -99,11 +99,11 @@ class RecipeShow extends React.Component {
     return result.charAt(0).toUpperCase() + result.slice(1);
   }
 
-  renderRecipeData() {
-    let {recipeData} = this.state
-    let ferment = recipeData?.ferment || {}
-    let bulk = recipeData?.bulk || {}
-    let extra = recipeData?.extra || {}
+  renderRelationshipData() {
+    let {relationshipData} = this.state
+    let ferment = relationshipData?.ferment || {}
+    let bulk = relationshipData?.bulk || {}
+    let extra = relationshipData?.extra || {}
     let fermentData = Object.keys(ferment).length === 0
       ? null
       : <div className="pt-2 border-t-2 border-dotted border-yellow-900"> 
@@ -199,25 +199,25 @@ class RecipeShow extends React.Component {
     </div>
   }
 
-  deleteAndRedirect(recipeId) {
-    let { deleteRecipe, history } = this.props
-    deleteRecipe(recipeId)
+  deleteAndRedirect(relationshipId) {
+    let { deleteRelationship, history } = this.props
+    deleteRelationship(relationshipId)
       .then(history.push('/'))
   }
 
-  recipeNav() { // dlete button for owner, and bookmark button eventually
-    let { currentUser, recipe } = this.props
-    let deleteButton = currentUser.id !== recipe.authorId ? null
+  relationshipNav() { // dlete button for owner, and bookmark button eventually
+    let { currentUser, relationship } = this.props
+    let deleteButton = currentUser.id !== relationship.authorId ? null
       : <span className="cursor-pointer font-light text-gray-600 hover:text-red-700 hover:font-bold"
-          onClick={() => this.deleteAndRedirect(recipe._id)} >Delete</span> 
+          onClick={() => this.deleteAndRedirect(relationship._id)} >Delete</span> 
     return (<div className="flex items-center justify-between">
       {deleteButton}
     </div>)
   }
   
   render() {
-    let { recipe } = this.props
-    if (!recipe || !recipe.authorId) {
+    let { relationship } = this.props
+    if (!relationship || !relationship.authorId) {
       return null
     }
     let pizzasString = this.state.numPizzas > 1 ? 'pizzas' : 'pizza'
@@ -225,11 +225,11 @@ class RecipeShow extends React.Component {
       <div className='w-full mx-auto px-4'>
         <div className="mt-7 bg-white max-w-2xl px-4 mx-auto border-2 border-yellow-900 rounded-sm">
           <div className='flex items-center justify-between'>
-            <h2 className='mt-2 text-xl font-bold'>{recipe.title}</h2>
-            {this.recipeNav()}
+            <h2 className='mt-2 text-xl font-bold'>{relationship.title}</h2>
+            {this.relationshipNav()}
           </div>
-          <div>{recipe.authorName}</div>
-          <p className="my-2 italic">{recipe.originalProportion}</p>
+          <div>{relationship.authorName}</div>
+          <p className="my-2 italic">{relationship.originalProportion}</p>
         </div>
         <div className='flex flex-wrap justify-center -mt-4 py-4 -ml-10'>
           <div className="flex flex-col max-w-md justify-between mt-4 mb-2 ml-10 items-center p-4 min-h-[25rem] bg-white border-2 border-yellow-900 rounded-sm">
@@ -252,11 +252,11 @@ class RecipeShow extends React.Component {
               <h3> crust.</h3>
             </div>
             <div className="w-full">
-              {this.renderRecipeData()}
+              {this.renderRelationshipData()}
             </div>
           </div>
           <div className="bg-white min-h-[25rem] p-4 max-w-md w-full mt-4 mb-2 ml-10 border-2 border-yellow-900 rounded-sm">
-            <pre className='w-full h-full whitespace-pre-wrap font-[inherit]'>{recipe.body}</pre>
+            <pre className='w-full h-full whitespace-pre-wrap font-[inherit]'>{relationship.body}</pre>
           </div>
 
         </div>
@@ -265,4 +265,4 @@ class RecipeShow extends React.Component {
   }
 }
 
-export default withRouter(RecipeShow)
+export default withRouter(RelationshipShow)

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { withRouter } from "react-router";
 
-const RecipeForm = props => {
+const RelationshipForm = props => {
   let {author} = props
 
   const [title, setTitle] = useState('')
@@ -39,7 +39,7 @@ const RecipeForm = props => {
   
   const handleErrors = () => {
     return(
-      <ul className='recipe error-list'>
+      <ul className='relationship error-list'>
         {props.errors.map((error, i) => (
           <li key={i}>{error}</li>
         ))}
@@ -49,7 +49,7 @@ const RecipeForm = props => {
   
   const allowSubmit = () => {
     if (title.length > 0 && (Object.keys(fermentData).length > 0) && (Object.keys(bulkData).length > 0)) {
-      return <input type="submit" form='recipe-form' className='text-right cursor-pointer font-medium text-gray-600 hover:text-black hover:italic' value='Publish' />
+      return <input type="submit" form='relationship-form' className='text-right cursor-pointer font-medium text-gray-600 hover:text-black hover:italic' value='Publish' />
     } else {
       return <input type="submit" form='story-form' className='text-right font-medium text-gray-600' value='Publish' disabled/>
     }
@@ -108,11 +108,11 @@ const RecipeForm = props => {
       authorName: author.username,
       title,
       body,
-      originalProportion: `This recipe was originally made for ${numPizzas} ${pizzaSizeString} ${crustThickness}-crust ${pie}.`,
+      originalProportion: `This relationship was originally made for ${numPizzas} ${pizzaSizeString} ${crustThickness}-crust ${pie}.`,
       data: buildData(doughFactor)
     })
       .then(res => {
-        props.history.push(`/recipes/${res.recipe._id}`)
+        props.history.push(`/relationships/${res.relationship._id}`)
       })
   }
 
@@ -131,7 +131,7 @@ const RecipeForm = props => {
           <div className="flex w-40 justify-between mb-3 border-b-2 border-yellow-900">
             <input type="number" step="0.1" min='0'
               className='outline-0 w-20'
-              form='recipe-form'
+              form='relationship-form'
               onChange={update('ferment', 'yeastQuantity')}/>
             <p className="italic">grams</p>
           </div>
@@ -325,7 +325,7 @@ const RecipeForm = props => {
         <div className="flex flex-wrap justify-between py-4 " >
           <form className='w-full '
             onSubmit={handleSubmit} 
-            id='recipe-form'>
+            id='relationship-form'>
             <input className="font-semibold text-2xl outline-0 w-full mb-3 border-b-2 border-yellow-900"
               type="text" 
               value={title} 
@@ -415,7 +415,7 @@ const RecipeForm = props => {
       </div>
       <div className=" bg-white min-h-[25rem] w-full max-w-md mx-auto mt-7 border-2 border-yellow-900 rounded-sm">
         <div className="w-full h-full p-4 flex flex-col justify-between">
-          <textarea form='recipe-form'
+          <textarea form='relationship-form'
             type='text'
             value={body}
             onChange={update('body')}
@@ -428,4 +428,4 @@ const RecipeForm = props => {
   )
 }
 
-export default withRouter(RecipeForm)
+export default withRouter(RelationshipForm)
