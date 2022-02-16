@@ -15,11 +15,11 @@ router.post('/create',
     let currUser = req.user
     newRelationship.save()
       .then(relationship => {
-        currUser.relationships = [...currUser.relationships, relationship]
-        currUser.save()
-          .then(user => {
+        // currUser.relationships = [...currUser.relationships, relationship]
+        // currUser.save()
+        //   .then(user => {
             res.json(relationship)
-          })
+          // })
       })
       .catch(err => res.status(400).json(err));
 })

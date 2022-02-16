@@ -15,7 +15,6 @@ const mSTP = (state, {match}) => {
 }
 
 const mDTP = dispatch => ({
-  // displayModal: () => dispatch(displayModal('Comments')),
   getRelationship: relationshipId => dispatch(getRelationship(relationshipId)),
   deleteRelationship: relationshipId => dispatch(deleteRelationship(relationshipId)),
 })

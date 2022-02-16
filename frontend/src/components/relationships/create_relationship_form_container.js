@@ -3,11 +3,9 @@ import RelationshipForm from "./relationship_form";
 import { createRelationship } from "../../actions/relationship_actions";
 
 const mSTP = state => {
-  const author = state.session.user
-  const currentUserId = author.id
+  const currentUser = state.session.user
   return ({
-    author,
-    currentUserId,
+    currentUser,
     formType: 'Create Relationship',
     errors: state.errors.relationship
   })
