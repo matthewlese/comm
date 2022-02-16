@@ -11,7 +11,7 @@ export const showRelationship = async (relationshipId) => {
 }
 
 export const createRelationship = async (relationship) => {
-  const response = await axios.post("/api/relationships/create", relationship);
+  const response = await axios.post("/api/relationships", relationship);
   return response.data;
 };
 

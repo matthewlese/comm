@@ -6,7 +6,7 @@ const Relationship = require("../../models/Relationship");
 const Discussion = require("../../models/Discussion");
 const validateDiscussionInput = require('../../validations/discussion');
 
-router.post('/create',
+router.post('',
   passport.authenticate('jwt', { session: false }), 
   async (req, res) => {
     const { errors, isValid } = validateDiscussionInput(req.body)

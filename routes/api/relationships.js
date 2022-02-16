@@ -4,7 +4,7 @@ const passport = require('passport');
 
 const Relationship = require("../../models/Relationship");
 
-router.post('/create',
+router.post('',
   passport.authenticate('jwt', { session: false }), 
   (req, res) => {
     const relData = {
@@ -55,6 +55,25 @@ router.get('/:relationshipId/discussions',
     Discussion.find({ relationshipId })
       .then(discussions => res.json(discussions))
       .catch(err => res.status(404).json({ noRelationshipFound: 'No relationship found.'}))
+})
+
+router.post('/:relationshipId/invitations',
+  passport.authenticate('jwt', { session: false }), 
+  (req, res) => {
+    const { inviteeUsername, relationshipId } = req.body
+    console.log(req.params)
+    User.findOne({ username: inviteeUsername })
+      .then(user => {
+        const newInvitation = new Invitation({
+          relationshipId,
+          invitee: user._id,
+          inviter: req.user._id
+        })
+        newInvitation.save()
+          .then(invitation => res.json(invitation))
+          .catch(err => res.status(400).json(err));
+      })
+      .catch(err => res.status(400).json({ noUserFound: "No user found with that username"}))
 })
 
 module.exports = router;

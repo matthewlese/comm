@@ -2,17 +2,29 @@ import React, { useState, useEffect } from "react"
 import { withRouter } from "react-router"
 
 const RelationshipShow = props => {
+  const [inviting, setInviting] = useState(false)
+  const [usernameToSearch, setUsernameToSearch] = useState('')
 
   useEffect(() => {
     let {relationshipId, relationship, getRelationship, history} = props
     getRelationship(relationshipId)
-      // .then(res => {
-
-      // },
-      //   err => history.push('/feed'))
   }, [])
 
-  
+  const invitePartner = () => {
+    return !inviting ?
+      <p onClick={e => setInviting(true)}>Add a partner</p>
+      : 
+      <div>
+        <input type="text"
+          onChange={e => setUsernameToSearch(e.target.value)}
+          value={usernameToSearch}
+          placeholder='username'/>
+        <button className="mr-1">Send</button>
+        <button className="cursor-pointer font-semibold text-red-700"
+          onClick={e => setInviting(false)}>Cancel</button>
+      </div>
+  }
+
 
   if (!props.relationship.members) { return null }
 
@@ -27,7 +39,7 @@ const RelationshipShow = props => {
               </li>
             ))
           }
-          <p>Add a partner</p>
+          {invitePartner()}
         </ul>
       </div>
     </div>
