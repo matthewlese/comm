@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export const showAllRelationships = async () => {
-  const response = await axios.get('/api/relationships')
+export const showUsersRelationships = async (userId) => {
+  const response = await axios.get(`/api/users/${userId}/relationships`)
   return response.data;
 }
 

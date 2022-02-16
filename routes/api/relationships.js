@@ -8,14 +8,14 @@ router.post('/create',
   passport.authenticate('jwt', { session: false }), 
   (req, res) => {
     const relData = {
-      members: [req.user._id],
+      members: [req.user],
       ...req.body
     };
     const newRelationship = new Relationship(relData)
     let currUser = req.user
     newRelationship.save()
       .then(relationship => {
-        currUser.relationships = [...currUser.relationships, relationship._id]
+        currUser.relationships = [...currUser.relationships, relationship]
         currUser.save()
           .then(user => {
             res.json(relationship)

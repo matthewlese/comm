@@ -30,8 +30,8 @@ export const getRelationship = relationshipId => dispatch =>
     .then(relationship => dispatch(receiveRelationship(relationship)))
     .catch(err => dispatch(receiveErrors(err)))
 
-export const getAllRelationships = () => dispatch =>
-  RelationshipAPIUtil.showAllRelationships()
+export const getAllRelationships = userId => dispatch =>
+  RelationshipAPIUtil.showUsersRelationships(userId)
     .then(relationships => dispatch(receiveAllRelationships(relationships)))
     .catch(err => dispatch(receiveErrors(err)))
     

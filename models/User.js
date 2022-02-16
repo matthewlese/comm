@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const RelationshipSchema = new Schema({
+  discussions: {
+    type: [Schema.Types.ObjectId],
+    required: true
+  }
+}, {
+  timestamps: true
+})
+
 const UserSchema = new Schema({
   username: {
     type: String,
@@ -11,7 +20,7 @@ const UserSchema = new Schema({
     required: true
   },
   relationships: {
-    type: [Schema.Types.ObjectId],
+    type: [RelationshipSchema],
     required: true
   }
 }, {
