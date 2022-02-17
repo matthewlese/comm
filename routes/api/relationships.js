@@ -17,11 +17,11 @@ router.post('',
     let currUser = req.user
     newRelationship.save()
       .then(relationship => {
-        // currUser.relationships = [...currUser.relationships, relationship]
-        // currUser.save()
-        //   .then(user => {
+        currUser.relationships = [...currUser.relationships, relationship._id]
+        currUser.save()
+          .then(user => {
             res.json(relationship)
-          // })
+          })
       })
       .catch(err => res.status(400).json(err));
 })
@@ -37,6 +37,7 @@ router.get('/:relationshipId',
   (req, res) => {
     const { relationshipId } = req.params
     Relationship.findById(relationshipId)
+      .populate('members')
       .then(relationship => res.json(relationship))
       .catch(err => res.status(404).json({ noRelationshipFound: 'No relationship found.'}))
 })

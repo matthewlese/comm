@@ -23,10 +23,7 @@ const RelationshipSchema = new Schema({
     type: [Schema.Types.ObjectId],
     required: true
   },
-  members: {
-    type: [UserSchema],
-    required: true
-  }
+  members: [{ type: Schema.Types.ObjectId, ref: 'User'}]
 }, {
   timestamps: true
 })

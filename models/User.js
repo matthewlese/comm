@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+// const Relationship = require('./Relationship')
 
 // const RelationshipSchema = new Schema({
 //   discussions: {
@@ -20,10 +21,7 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  // relationships: {
-  //   type: [RelationshipSchema],
-  //   required: true
-  // }
+  relationships: [{ type: Schema.Types.ObjectId, ref: 'Relationship'}]
 }, {
   timestamps: true
 })
