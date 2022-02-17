@@ -4,22 +4,20 @@ import { withRouter } from "react-router";
 const RelationshipForm = props => {
   let {currentUser} = props
   
-  const handleErrors = () => {
-    return(
-      <ul className='relationship error-list'>
-        {props.errors.map((error, i) => (
-          <li key={i}>{error}</li>
-        ))}
-      </ul>
-    )
-  }
+  // const handleErrors = () => {
+  //   return(
+  //     <ul className='relationship error-list'>
+  //       {props.errors.map((error, i) => (
+  //         <li key={i}>{error}</li>
+  //       ))}
+  //     </ul>
+  //   )
+  // }
 
 
   const handleSubmit = e => {
     e.preventDefault()
-    props.action({
-
-    })
+    props.action({})
       .then(res => {
         props.history.push(`/relationships/${res.relationship._id}`)
       })
@@ -27,7 +25,7 @@ const RelationshipForm = props => {
 
   return(
     <div className='flex flex-wrap -mt-2 w-full mx-auto px-4'>
-      {handleErrors()}
+      {/* {handleErrors()} */}
       <div className="flex mt-7 min-h-[25rem] bg-white max-w-md px-4 mx-auto border-2 border-yellow-900 rounded-sm ">
         <div className="flex flex-wrap justify-between py-4 " >
           <form className='w-full '

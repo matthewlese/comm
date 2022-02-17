@@ -2,7 +2,7 @@ import React from "react"
 import { withRouter } from "react-router"
 
 const Header = props => {
-  let { signedIn, currentUser, displayModal, signout, history } = props
+  let { signedIn, createRelationship, displayModal, signout, history } = props
 
   let rightNav
 
@@ -16,11 +16,17 @@ const Header = props => {
   } else {
     rightNav = <div className='flex items-center space-x-3'>
       <div className='cursor-pointer font-medium text-gray-800 hover:text-black hover:italic' 
-        onClick={e => history.push('/relationships/create')}>Create a Relationship</div>
+        onClick={e => createAndRedirect()}>Create a Relationship</div>
       <div className='cursor-pointer font-medium text-gray-800 hover:text-black hover:italic' 
         onClick={e => signout()}>Sign Out</div>
     </div>
   }
+
+  const createAndRedirect = async () => {
+    const newRelationship = await createRelationship()
+    console.log(newRelationship)
+  }
+
   return (
     <nav className='bg-white border-b-2 border-yellow-900'>
       <div className='max-w-6xl mx-auto px-4'>

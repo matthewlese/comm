@@ -8,22 +8,14 @@ const Invitation = require("../../models/Invitation");
 
 router.post('',
   passport.authenticate('jwt', { session: false }), 
-  (req, res) => {
-    const relData = {
-      members: [req.user],
-      ...req.body
-    };
-    const newRelationship = new Relationship(relData)
+  async (req, res) => {
+    const newRelationship = new Relationship()
     let currUser = req.user
-    newRelationship.save()
-      .then(relationship => {
-        currUser.relationships = [...currUser.relationships, relationship._id]
-        currUser.save()
-          .then(user => {
-            res.json(relationship)
-          })
-      })
-      .catch(err => res.status(400).json(err));
+    newRelationship._members.push(currUser)
+    const relationship = await newRelationship.save()
+    currUser._relationships = [...currUser._relationships, relationship._id]
+    await currUser.save()
+    res.json(relationship)
 })
 
 // router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -37,7 +29,7 @@ router.get('/:relationshipId',
   (req, res) => {
     const { relationshipId } = req.params
     Relationship.findById(relationshipId)
-      .populate('members')
+      .populate('_members')
       .then(relationship => res.json(relationship))
       .catch(err => res.status(404).json({ noRelationshipFound: 'No relationship found.'}))
 })

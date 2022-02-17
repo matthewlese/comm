@@ -42,14 +42,14 @@ const RelationshipShow = props => {
     })
   }
 
-  if (!relationship.members) { return null }
+  if (!relationship._members) { return null }
 
   return(
     <div className="w-full mx-auto px-4">
       <div className="flex items-center justify-between py-4 mt-7 bg-white max-w-2xl px-4 mx-auto border-2 border-yellow-900 rounded-sm">
         <ul className="items-center justify-between">
           {
-            relationship.members.map((member, i) => (
+            relationship._members.map((member, i) => (
               <li key={i}>
                 {member.username}
               </li>

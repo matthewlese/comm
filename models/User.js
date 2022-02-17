@@ -21,7 +21,7 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  relationships: [{ type: Schema.Types.ObjectId, ref: 'Relationship'}]
+  _relationships: [{ type: Schema.Types.ObjectId, ref: 'Relationship'}]
 }, {
   timestamps: true
 })
