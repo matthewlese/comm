@@ -5,6 +5,11 @@ export const showInvitation = async (invitationId) => {
   return response.data
 }
 
+export const showUsersInvitations = async (userId) => {
+  const response = await axios.get(`/api/users/${userId}/invitations`)
+  return response.data
+}
+
 export const createInvitation = async (invitation) => {
   const response = await axios.post(`/api/relationships/${invitation.relationshipId}/invitations`, invitation)
   return response.data

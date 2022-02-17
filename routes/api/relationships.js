@@ -79,13 +79,3 @@ router.post('/:relationshipId/invitations',
 })
 
 module.exports = router;
-
-// Invitation.findOne({
-//   relationshipId,
-//   invitee: user._id
-// })
-//   .then(invitation => {
-//     console.log(invitation)
-//     res.status(400).json('That user has already been invited')})
-//   .catch(err => {
-// })

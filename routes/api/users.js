@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
 const User = require('../../models/User');
+const Invitation = require('../../models/Invitation');
 const validateSignupInput = require('../../validations/signup');
 const validateSigninInput = require('../../validations/signin');
 const isRelatedTo = require('../../util/is_related_to')
@@ -135,6 +136,17 @@ router.get('/:userId/relationships',
     User.findOne({ id: userId })
       .then(user => res.json(user.relationships))
       .catch(err => res.status(404).json({ noRelationshipsFound: 'No relationships found.'}))
+})
+
+router.get('/:userId/invitations',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const userId = req.params.userId
+    const currentUserId = req.user.id
+    if (userId !== currentUserId) { return res.status(401).json('You can only view your own invitations')}
+    Invitation.find({ invitee: userId, accepted: false })
+      .then(invitations => res.json(invitations))
+      .catch(err => res.status(404).json({ noRelationshipsFound: 'No invitations found.'}))
 })
 
 module.exports = router;
