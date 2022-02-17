@@ -1,5 +1,5 @@
-import React from "react"
-import { withRouter } from "react-router"
+import React from "react";
+import { withRouter } from "react-router";
 
 const Header = props => {
   let { signedIn, createRelationship, displayModal, signout, history } = props

@@ -6,7 +6,7 @@ import HeaderContainer from '../components/header/header_container'
 import Modal from '../components/modal/modal_container'
 import CreateRelationshipFormContainer from '../components/relationships/create_relationship_form_container'
 import RelationshipShowContainer from './relationships/relationship_show_container';
-// import RelationshipsIndexContainer from '../components/relationships/relationships_index_container'
+import InvitationShowContainer from './invitations/invitation_show_container';
 import HomeContainer from './home/home_container';
 
 const App = () => {
@@ -16,10 +16,10 @@ const App = () => {
     <div className='flex flex-col justify-between min-h-[95vh]'>
       <div className='relative pb-6 overflow-hidden'>
         <Switch>
-          {/* <ProtectedRoute exact path='/' component={RelationshipsIndexContainer}/> */}
-          <ProtectedRoute exact path='/' component={HomeContainer}/>
           <ProtectedRoute exact path='/relationships/create' component={CreateRelationshipFormContainer}/>
-          <ProtectedRoute path='/relationships/:relationshipId' component={RelationshipShowContainer}/>
+          <ProtectedRoute path='/relationships/:relationshipId' component={RelationshipShowContainer} />
+          <ProtectedRoute path='/invitations/:invitationId' component={InvitationShowContainer}/>
+          <ProtectedRoute exact path='/' component={HomeContainer}/>
         </Switch>
       </div>
       <footer className='bg-yellow-900 relative bottom-0 h-20 w-screen'>

@@ -153,7 +153,8 @@ router.get('/:userId/invitations',
     const userId = req.params.userId
     const currentUserId = req.user.id
     if (userId !== currentUserId) { return res.status(401).json('You can only view your own invitations')}
-    Invitation.find({ invitee: userId, accepted: false })
+    Invitation.find({ _invitee: userId, accepted: false })
+      .populate('_inviter')
       .then(invitations => res.json(invitations))
       .catch(err => res.status(404).json({ noRelationshipsFound: 'No invitations found.'}))
 })

@@ -6,16 +6,18 @@ const InvitationSchema = new Schema({
     type: String,
     required: true
   },
-  relationshipId: {
+  _relationship: {
+    type: Schema.Types.ObjectId,
+    ref: 'Relationship',
+    required: true
+  },
+  _invitee: {
     type: Schema.Types.ObjectId,
     required: true
   },
-  invitee: {
+  _inviter: {
     type: Schema.Types.ObjectId,
-    required: true
-  },
-  inviter: {
-    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
   accepted: {

@@ -6,9 +6,10 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
 
-const users = require('./routes/api/users')
-const relationships = require('./routes/api/relationships')
-const discussions = require('./routes/api/discussions')
+const users = require('./routes/api/users');
+const relationships = require('./routes/api/relationships');
+const discussions = require('./routes/api/discussions');
+const invitations = require('./routes/api/invitations');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -22,8 +23,9 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get("/", (req, res) => res.send("Hello World 2"));
 app.use("/api/users", users);
-app.use('/api/relationships', relationships)
-app.use('/api/discussions', discussions)
+app.use('/api/relationships', relationships);
+app.use('/api/discussions', discussions);
+app.use('/api/invitations', invitations);
 
 app.use(passport.initialize());
 require('./config/passport')(passport);

@@ -60,9 +60,9 @@ router.post('/:relationshipId/invitations',
       .then(user => {
         const newInvitation = new Invitation({
           message,
-          relationshipId,
-          invitee: user._id,
-          inviter: req.user._id,
+          _relationship: relationshipId,
+          _invitee: user._id,
+          _inviter: req.user._id,
           accepted: false
         })
         newInvitation.save()

@@ -1,4 +1,5 @@
 import * as InvitationAPIUtil from '../util/invitation_api_util';
+import { receiveRelationship } from './relationship_actions';
 
 export const RECEIVE_ALL_INVITATIONS = 'RECEIVE_ALL_INVITATIONS';
 export const RECEIVE_INVITATION = 'RECEIVE_INVITATION';
@@ -32,4 +33,9 @@ export const getAllInvitations = userId => dispatch =>
 export const createInvitation = invitation => dispatch =>
   InvitationAPIUtil.createInvitation(invitation)
     .then(invitation => dispatch(receiveInvitation(invitation)))
+    .catch(err => dispatch(receiveInvitationErrors(err)))
+
+export const acceptInvitation = invitationId => dispatch =>
+  InvitationAPIUtil.acceptInvitation(invitationId)
+    .then(relationshipId => dispatch(receiveRelationship(relationshipId)))
     .catch(err => dispatch(receiveInvitationErrors(err)))

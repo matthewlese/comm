@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import {withRouter} from 'react-router';
 
 function OpenInvitations(props) {
   const { currentUser, getAllInvitations, invitations } = props;
@@ -16,19 +17,22 @@ function OpenInvitations(props) {
       </div>
     )
   }
-
-  console.log(invitations)
   
   return (
     <div className='w-full mx-auto px-4'>
       <div className='mt-7 bg-white max-w-2xl px-4 mx-auto border-2 border-yellow-900 rounded-sm'>
-        <ul>
+        <ul className='py-2'>
           {
-            Object.keys(invitations).map((invitationKey, i) => (
-              <li key={i}>
-                <h3>{invitations[invitationKey].message}</h3>
-              </li>
-            ))
+            Object.keys(invitations).map((invitationKey, i) => {
+              const invitation = invitations[invitationKey];
+              return (
+                <li key={i}
+                  className='cursor-pointer hover:font-semibold'
+                  onClick={e => props.history.push(`/invitations/${invitation._id}`)}>
+                  <h3>{invitation._inviter.username + ': ' + invitation.message}</h3>
+                </li>
+              )
+            })
           }
         </ul>
       </div>
@@ -36,4 +40,4 @@ function OpenInvitations(props) {
   )
 }
 
-export default OpenInvitations
+export default withRouter(OpenInvitations)
