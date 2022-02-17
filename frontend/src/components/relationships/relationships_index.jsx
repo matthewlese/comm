@@ -4,7 +4,7 @@ import RelationshipsIndexItem from './relationships_index_item'
 function RelationshipsIndex(props) {
   const { getAllRelationships, relationships } = props;
 
-  useEffect(() => getAllRelationships(props.currentUser._id), []);
+  useEffect(() => getAllRelationships(props.currentUser.id), []);
 
   if (relationships.length === 0) {
     return(

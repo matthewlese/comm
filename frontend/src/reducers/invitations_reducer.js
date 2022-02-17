@@ -13,7 +13,7 @@ const inviationsReducer = (state = {}, action) => {
     case RECEIVE_ALL_INVITATIONS:
       return action.invitations;
     default:
-      return {};
+      return nextState;
   }
 };
 

@@ -24,7 +24,7 @@ const Header = props => {
 
   const createAndRedirect = async () => {
     const newRelationship = await createRelationship()
-    console.log(newRelationship)
+    props.history.push(`/relationships/${newRelationship.relationship._id}`)
   }
 
   return (

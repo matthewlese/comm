@@ -16,6 +16,8 @@ function OpenInvitations(props) {
       </div>
     )
   }
+
+  console.log(invitations)
   
   return (
     <div className='w-full mx-auto px-4'>
@@ -24,7 +26,7 @@ function OpenInvitations(props) {
           {
             Object.keys(invitations).map((invitationKey, i) => (
               <li key={i}>
-                {JSON.stringify(invitations[invitationKey])}
+                <h3>{invitations[invitationKey].message}</h3>
               </li>
             ))
           }

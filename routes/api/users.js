@@ -135,8 +135,15 @@ router.get('/:userId/relationships',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const userId = req.params.userId
-    User.findOne({ id: userId })
-      .then(user => res.json(user.relationships))
+    User.findOne({ _id: userId })
+      .populate({
+        path: '_relationships',
+        populate: {
+          path: '_members',
+          model: 'User'
+        }
+      })
+      .then(user => res.json(user._relationships))
       .catch(err => res.status(404).json({ noRelationshipsFound: 'No relationships found.'}))
 })
 
