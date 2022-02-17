@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import RelationshipShow from "./relationship_show";
 import { getRelationship, deleteRelationship } from "../../actions/relationship_actions";
-// import { displayModal } from "../../actions/modal_actions";
+import { createInvitation } from "../../actions/invitation_actions";
 
 const mSTP = (state, {match}) => {
   const relationshipId = match.params.relationshipId
@@ -17,6 +17,7 @@ const mSTP = (state, {match}) => {
 const mDTP = dispatch => ({
   getRelationship: relationshipId => dispatch(getRelationship(relationshipId)),
   deleteRelationship: relationshipId => dispatch(deleteRelationship(relationshipId)),
+  createInvitation: invitation => dispatch(createInvitation(invitation)),
 })
 
 export default connect(mSTP, mDTP)(RelationshipShow)

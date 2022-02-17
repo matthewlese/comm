@@ -22,4 +22,6 @@ const InvitationSchema = new Schema({
   timestamps: true
 });
 
+InvitationSchema.index({ relationshipId: 1, invitee: 1 }, { unique: true })
+
 module.exports = Invitation = mongoose.model('Invitation', InvitationSchema)

@@ -6,6 +6,6 @@ export const showInvitation = async (invitationId) => {
 }
 
 export const createInvitation = async (invitation) => {
-  const response = await axios.post(`/api/relationships/${invitation.relationshipId}/invitations`)
+  const response = await axios.post(`/api/relationships/${invitation.relationshipId}/invitations`, invitation)
   return response.data
 }

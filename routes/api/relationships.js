@@ -65,24 +65,27 @@ router.post('/:relationshipId/invitations',
     const { inviteeUsername, relationshipId } = req.body
     User.findOne({ username: inviteeUsername })
       .then(user => {
-        Invitation.findOne({
+        const newInvitation = new Invitation({
           relationshipId,
-          invitee: user._id
+          invitee: user._id,
+          inviter: req.user._id,
+          accepted: false
         })
-          .then(invitation => res.status(400).json('That user has already been invited'))
-          .catch(err => {
-            const newInvitation = new Invitation({
-              relationshipId,
-              invitee: user._id,
-              inviter: req.user._id,
-              accepted: false
-            })
-            newInvitation.save()
-              .then(invitation => res.json(invitation))
-              .catch(err => res.status(400).json(err));
-          })
+        newInvitation.save()
+          .then(invitation => res.json(invitation))
+          .catch(err => res.status(400).json(err));
       })
       .catch(err => res.status(400).json({ noUserFound: "No user found with that username"}))
 })
 
 module.exports = router;
+
+// Invitation.findOne({
+//   relationshipId,
+//   invitee: user._id
+// })
+//   .then(invitation => {
+//     console.log(invitation)
+//     res.status(400).json('That user has already been invited')})
+//   .catch(err => {
+// })
