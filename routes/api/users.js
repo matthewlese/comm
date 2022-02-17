@@ -7,6 +7,8 @@ const passport = require('passport');
 
 const User = require('../../models/User');
 const Invitation = require('../../models/Invitation');
+const Relationship = require('../../models/Relationship');
+
 const validateSignupInput = require('../../validations/signup');
 const validateSigninInput = require('../../validations/signin');
 const isRelatedTo = require('../../util/is_related_to')

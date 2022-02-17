@@ -24,7 +24,7 @@ function OpenInvitations(props) {
           {
             Object.keys(invitations).map((invitationKey, i) => (
               <li key={i}>
-                JSON.stringify(invitations(invitationKey))
+                {JSON.stringify(invitations[invitationKey])}
               </li>
             ))
           }

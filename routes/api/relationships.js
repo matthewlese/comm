@@ -62,10 +62,11 @@ router.get('/:relationshipId/discussions',
 router.post('/:relationshipId/invitations',
   passport.authenticate('jwt', { session: false }), 
   (req, res) => {
-    const { inviteeUsername, relationshipId } = req.body
+    const { inviteeUsername, relationshipId , message } = req.body
     User.findOne({ username: inviteeUsername })
       .then(user => {
         const newInvitation = new Invitation({
+          message,
           relationshipId,
           invitee: user._id,
           inviter: req.user._id,
