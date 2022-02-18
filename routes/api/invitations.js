@@ -18,12 +18,21 @@ router.get('/:invitationId',
 
 router.patch('/:invitationId/accept',
   passport.authenticate('jwt', { session: false }), 
-  (req, res) => {
+  async (req, res) => {
     const { invitationId } = req.params;
     Invitation.findOneAndUpdate({ id: invitationId }, { accepted: true })
       .populate('_relationship')
-      .then(invitation => {
-        res.json(invitation._relationship)})
+      .then(async invitation => {
+        let relationship = invitation._relationship
+        relationship._members.push(invitation._invitee)
+        await relationship.save()
+        let invitee = await User.findOne({ id: invitation._invitee })
+        console.log(invitee)
+        console.log(invitation._inviter)
+        invitee._relationships.push(relationship._id)
+        invitee.save()
+          .then(invitee => res.json(relationship))
+      })
       .catch(err => res.status(400).json({ noInvitationFound: "No invitation found"}))
 })
 
